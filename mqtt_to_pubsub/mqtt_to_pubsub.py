@@ -14,7 +14,8 @@ def on_message(client, userdata, msg):
 
 
 client = mqtt.Client()
-client.connect("test.mosquitto.org", 1883)
+client.tls_set()
+client.connect("test.mosquitto.org", 8883)
 client.subscribe("water/sensor")
 client.on_message = on_message
 

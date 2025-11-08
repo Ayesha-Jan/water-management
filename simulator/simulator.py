@@ -2,10 +2,11 @@ import time, json, random
 import paho.mqtt.client as mqtt
 
 broker = "test.mosquitto.org"
+port = 8883
 topic = "water/sensor"
 
 client = mqtt.Client()
-client.connect(broker, 1883)
+client.connect(broker, port)
 
 while True:
     # generate fake data
