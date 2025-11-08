@@ -1,4 +1,4 @@
-import time, json, random
+import time, json, random, ssl
 import paho.mqtt.client as mqtt
 
 broker = "test.mosquitto.org"
@@ -6,6 +6,7 @@ port = 8883
 topic = "water/sensor"
 
 client = mqtt.Client()
+client.tls_set(ca_certs="../mosquitto.org.crt", cert_reqs=ssl.CERT_REQUIRED)
 client.connect(broker, port)
 
 while True:

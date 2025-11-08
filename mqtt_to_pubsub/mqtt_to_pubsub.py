@@ -1,5 +1,6 @@
 from google.cloud import pubsub_v1
 import paho.mqtt.client as mqtt
+import ssl
 
 project_id = "water-management-477509"
 topic_id = "water-sensor-topic"
@@ -14,7 +15,7 @@ def on_message(client, userdata, msg):
 
 
 client = mqtt.Client()
-client.tls_set()
+client.tls_set(ca_certs="../mosquitto.org.crt", cert_reqs=ssl.CERT_REQUIRED)
 client.connect("test.mosquitto.org", 8883)
 client.subscribe("water/sensor")
 client.on_message = on_message
