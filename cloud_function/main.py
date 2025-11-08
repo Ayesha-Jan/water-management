@@ -10,6 +10,8 @@ def process_data(event, context):
     device_id = data.get("device_id", "unknown")
     flow = float(data.get("flow_rate", 0))
     timestamp = data.get("timestamp")
+    lat = float(data.get("latitude", 0))
+    lon = float(data.get("longitude", 0))
     anomaly = flow > 10.0 or flow < 0.1  # simple leak detection
 
     client = bigquery.Client()
@@ -19,7 +21,9 @@ def process_data(event, context):
         "device_id": device_id,
         "flow_rate": flow,
         "timestamp": timestamp,
-        "anomaly": anomaly
+        "anomaly": anomaly,
+        "latitude": lat,
+        "longitude": lon
     }]
 
     errors = client.insert_rows_json(table_id, rows)
