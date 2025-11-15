@@ -15,8 +15,9 @@ def on_message(client, userdata, msg):
 
 
 client = mqtt.Client()
-client.tls_set(ca_certs="../mosquitto.org.crt", cert_reqs=ssl.CERT_REQUIRED)
-client.connect("test.mosquitto.org", 8883)
+client.tls_set(cert_reqs=ssl.CERT_REQUIRED, tls_version=ssl.PROTOCOL_TLS_CLIENT)
+client.tls_insecure_set(False)
+client.connect("broker.hivemq.com", 8883)
 client.subscribe("water/sensor")
 client.on_message = on_message
 

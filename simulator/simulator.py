@@ -1,12 +1,13 @@
 import time, json, random, ssl
 import paho.mqtt.client as mqtt
 
-broker = "test.mosquitto.org"
+broker = "broker.hivemq.com"
 port = 8883
 topic = "water/sensor"
 
 client = mqtt.Client()
-client.tls_set(ca_certs="../mosquitto.org.crt", cert_reqs=ssl.CERT_REQUIRED)
+client.tls_set(cert_reqs=ssl.CERT_REQUIRED, tls_version=ssl.PROTOCOL_TLS_CLIENT)
+client.tls_insecure_set(False)
 client.connect(broker, port)
 
 # Define 3 sensors with fixed coordinates
@@ -28,5 +29,5 @@ while True:
         }
         print("Sending:", payload)
         client.publish(topic, json.dumps(payload))
-        time.sleep(2)  # small delay between sensors
-    time.sleep(5)  # wait before next cycle
+        time.sleep(2)
+    time.sleep(5)
